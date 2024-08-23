@@ -106,8 +106,10 @@ module Xray
         (\.self)?              # Sprockets 3 appends .self to the filename
         (-\h{32,64})?          # Fingerprint varies based on Sprockets version
         \.js                   # Must have .js extension
-        [^>]+><\/script>
-      /x
+        [^>]+><\/script>|      # Traditional script tag
+
+        <script[^>]+type="importmap"[^>]*>.*?"#{script_name}":\s*"[^"]+\.js".*?<\/script>  # Importmap entry
+      /xm
     end
 
     # Appends the given `script_name` after the `after_script_name`.

@@ -6,6 +6,10 @@ module Xray
   # in the browser. It also hooks in a middleware responsible for injecting
   # xray.js and the xray bar into the app's response bodies.
   class Engine < ::Rails::Engine
+    initializer "xray.importmap", before: "importmap" do |app|
+      app.config.importmap.paths << Engine.root.join("config/importmap.rb") if app.config.respond_to?(:importmap)
+    end
+
     initializer "xray.initialize" do |app|
       app.middleware.use Xray::Middleware
 
