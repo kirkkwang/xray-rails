@@ -78,7 +78,7 @@ module Xray
       end
 
       # Augment JS templates
-      app.assets.register_preprocessor 'application/javascript', JavascriptPreprocessor
+      app.assets.try(:register_preprocessor, 'application/javascript', JavascriptPreprocessor)
 
       # This event is called near the beginning of a request cycle. We use it to
       # collect information about the controller and action that is responding, for
